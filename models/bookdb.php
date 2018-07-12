@@ -1,22 +1,5 @@
 <?php
 require_once('connection.php');
-public function getBookList()  
-    {  
-        // here goes some hardcoded values to simulate the database  
-        return array(  
-            "1" => new Book(1, "Jungle Book", "R. Kipling", "A classic book."),  
-            "2" => new Book(2, "Moonwalker", "J. Walker", ""),  
-            "3" => new Book(3, "PHP for Dummies", "Some Smart Guy", "")  
-        );  
-    }  
-      
-    public function getBook($id)  
-    {  
-        // we use the previous function to get all the books and then we return the requested one.  
-        // in a real life scenario this will be done through a db select command  
-        $allBooks = $this->getBookList();  
-        return $allBooks[$id];  
-    } 
 
 function get_books() {
     global $db;
@@ -51,5 +34,4 @@ function formUpdateBook($ID, $title, $author, $description) {
     $db->exec($query);
 
 }
-
 ?>

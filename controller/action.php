@@ -1,12 +1,9 @@
 <?php
 require('../models/connection.php');
 require('../models/bookdb.php');
-    
     $db = new dbObj();
     $connString =  $db->getConnstring();
-
     $params = $_REQUEST;
-    
     $action = isset($params['action']) != '' ? $params['action'] : '';
     echo var_dump(action);
 
@@ -36,9 +33,8 @@ require('../models/bookdb.php');
         include '../views/listBook.php';
         break;
      default:
-        $books = getbooks();
+        $books = get_books();
         include '../views/listBook.php';
      return;
     }
-
 ?>
