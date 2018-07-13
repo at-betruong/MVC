@@ -1,37 +1,55 @@
 <?php
 require_once('connection.php');
 
+$db = new dbObj();
+$connString =  $db->getConnstring();
+$params = $_REQUEST;
+$action = isset($params['action']) != '' ? $params['action'] : '';
+
 function get_books() {
-    global $db;
+    global $connString;
     $query = "SELECT * FROM book
               ORDER BY id";
-    $books = $db->query($query);
+    $books = $connString->query($query);
     return $books;
 }
-
+function insertBook($ID, $title, $author, $description) {
+    global $connString;
+    $query = "INSERT INTO book VALUES (".$ID.", '".$title."' , '".$author."' , '".$description."' )";
+    $connString->query($query);
+}
 function deleteBook($ID) {
-    global $db;
+    global $connString;
     $query = "DELETE FROM book
-              WHERE id = '$ID'";
-        $db->exec($query);
+              WHERE id = ".$ID;
+    $connString->query($query);
+    $book = get_books();
+    return $book;
 }
 
 function updateBook ($ID) {
-    global $db;
-    $query = "SELECT * FROM customers
-              WHERE customerID = '$customerID'";
-    $bookData = $db->query($query);
-    $bookData = $bookData->fetch();
+    global $connString;
+    $query = "SELECT * FROM book
+              WHERE id = ".$ID;
+    $bookData = $connString->query($query);
     return $bookData;
 }
 
 function formUpdateBook($ID, $title, $author, $description) {
-    global $db;
+    global $connString;
     $query = "UPDATE book
               SET
                   title = '$title', author = '$author', description = '$description'
               WHERE id = '$ID' ";
-    $db->exec($query);
+    $connString->query($query);
 
+}
+function search ($contentSearch) {
+    global $connString;
+    $query = "SELECT * FROM book
+              WHERE
+                  id = '$contentSearch' OR title = '$contentSearch' OR author = '$contentSearch'OR description = '$contentSearch' ";
+    $books = $connString->query($query);
+    return $books;
 }
 ?>

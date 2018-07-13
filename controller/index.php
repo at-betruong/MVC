@@ -1,19 +1,17 @@
 <?php
 require('../models/connection.php');
 require('../models/bookdb.php');
-    $db = new dbObj();
+
+$db = new dbObj();
     $connString =  $db->getConnstring();
+
     $params = $_REQUEST;
+    
     $action = isset($params['action']) != '' ? $params['action'] : '';
-    echo var_dump(action);
 
     switch($action) {
-     case 'addBook':
-        $books = get_books();
-        include '../views/listBook.php';
-        break;
      case 'updateBook':
-        $ID = $params['id'];
+        $ID = $params['ID'];
         $books = updateBook($ID);
         include '../views/updateBook.php';
         break;
@@ -23,18 +21,22 @@ require('../models/bookdb.php');
         $author = $params['author']; 
         $description = $params['description']; 
         formUpdateBook($ID, $title, $author, $description);
-        $customers = get_customers();
+        $books = get_books();
         include '../views/listBook.php';
         break;
-     case 'deleteBook':
+    case 'deleteBook':
         $ID = $params['ID'];
-        deleteBook($ID);
-        $books = get_books();
+        $books = deleteBook($ID);
         include '../views/listBook.php';
         break;
-     default:
+    case 'searchBook':
+    	$contentSearch = $params['search'];
+    	$books = search($contentSearch);
+    	include '../views/listBook.php';
+    	break;
+    default:
         $books = get_books();
         include '../views/listBook.php';
-     return;
+    return;
     }
 ?>

@@ -1,6 +1,15 @@
 <?php include 'header.php'; ?>
 <div id="main">
     <div id="content">
+        <form action="." method="GET">
+            <input type="hidden" name="action" value="searchBook" />
+            <input type="text" name="search" />
+            <input type="submit" value="Search" />
+        </form>
+        <form action="." method="GET">
+            <input type="hidden" name="action" value="addBook" />
+            <input type="submit" value="ADD" />
+        </form>
         <h2> Customer List </h2>
         <table>
             <tr>
@@ -11,7 +20,7 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
             </tr>
-            <?php foreach ($books as $book) : ?>
+            <?php foreach ($books as $key => $book) : ?>
             <tr>
                 <td><?php echo $book['id'] ?></td>
                 <td><?php echo $book['title'] ?></td>
